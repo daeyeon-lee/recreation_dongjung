@@ -12,7 +12,10 @@
     body {
       margin: 0;
       font-family: "Pretendard", sans-serif;
-      background: #f1efe7;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), transparent 38%),
+        radial-gradient(circle at bottom right, rgba(96, 165, 250, 0.14), transparent 45%),
+        linear-gradient(135deg, #F8FAFC 0%, #EEF4FF 45%, #E0F2FE 100%);
       color: #222;
     }
 
@@ -26,8 +29,8 @@
 
     .start-card {
       width: min(720px, 100%);
-      background: #fffdf7;
-      border: 14px solid #d8c7a3;
+      background: #ffffff;
+      border: 14px solid #E2E8F0;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.18);
       padding: 42px;
@@ -38,7 +41,7 @@
       font-size: 42px;
       font-weight: 900;
       margin: 0 0 12px;
-      color: #333;
+      color: #60A5FA;
       word-break: keep-all;
     }
 
@@ -65,13 +68,13 @@
     .team-input-row label {
       font-size: 20px;
       font-weight: 900;
-      color: #912642;
+      color: #60A5FA;
       text-align: left;
     }
 
     .team-input-row input {
       width: 100%;
-      border: 3px solid #e7e0d1;
+      border: 3px solid #E2E8F0;
       border-radius: 14px;
       padding: 16px 18px;
       font-family: inherit;
@@ -82,7 +85,7 @@
     }
 
     .team-input-row input:focus {
-      border-color: #912642;
+      border-color: #60A5FA;
     }
 
     .start-button {
@@ -93,9 +96,9 @@
       font-size: 22px;
       font-weight: 900;
       cursor: pointer;
-      background: #912642;
+      background: #818CF8;
       color: white;
-      box-shadow: 0 8px 18px rgba(145, 38, 66, 0.25);
+      box-shadow: 0 8px 18px rgba(129, 140, 248, 0.25);
     }
 
     .wrap {
@@ -113,10 +116,12 @@
     .board {
       width: min(1480px, 100%);
       min-height: 760px;
-      background: #fffdf7;
-      border: 14px solid #d8c7a3;
+      background: linear-gradient(180deg, #ffffff, #fdfdfd);
+      border: 14px solid #E2E8F0;
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+      box-shadow:
+        0 20px 40px rgba(0,0,0,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.9);
       padding: 30px;
       position: relative;
     }
@@ -126,7 +131,7 @@
       font-size: 44px;
       font-weight: 900;
       margin: 0 0 26px;
-      color: #333;
+      color: #60A5FA;
     }
 
     .scoreboard {
@@ -147,45 +152,97 @@
     }
 
     .header {
-      background: #f4f4f4;
-      border: 2px solid #ddd;
+      background: #F8FAFC;
+      border: 2px solid #E2E8F0;
     }
 
     .score {
       background: #fff;
-      border: 2px dashed #d6d6d6;
-      color: #912642;
+      border: 2px dashed #CBD5E1;
+      color: #60A5FA;
     }
 
     .postit {
+      position: relative;
       min-height: 96px;
       padding: 12px;
       border: none;
-      border-radius: 6px;
-      background: #ffe66d;
-      box-shadow: 0 7px 12px rgba(0,0,0,0.18);
+      border-radius: 5px;
+      background: #FFE066;
+      box-shadow:
+        0 3px 2px rgba(0,0,0,0.08),
+        0 10px 20px rgba(0,0,0,0.18),
+        0 20px 30px rgba(0,0,0,0.08);
       transform: rotate(-1deg);
       cursor: pointer;
       font-family: inherit;
       font-weight: 900;
       font-size: 20px;
       line-height: 1.25;
-      transition: 0.2s;
+      transition: all .25s ease;
       white-space: pre-line;
+      overflow: hidden;
+    }
+
+    .postit::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.24), rgba(0,0,0,0.04)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.08),
+          rgba(255,255,255,0.08) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      pointer-events: none;
+    }
+
+    .postit::after {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: 38px;
+      height: 18px;
+      background: rgba(255,255,255,0.56);
+      border-radius: 3px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+      pointer-events: none;
     }
 
     .postit:nth-child(odd) {
-      background: #ffd6e0;
+      background: #FFE066;
       transform: rotate(1deg);
     }
 
     .postit:nth-child(3n) {
-      background: #cdeffd;
+      background: #FFB86C;
       transform: rotate(-0.7deg);
     }
 
+    .postit:nth-child(4n) {
+      background: #8BE9A8;
+      transform: rotate(0.8deg);
+    }
+
+    .postit:nth-child(5n) {
+      background: #8EC5FF;
+      transform: rotate(-0.9deg);
+    }
+
+    .postit:nth-child(7n) {
+      background: #FF9EC4;
+    }
+
     .postit:hover {
-      transform: scale(1.04) rotate(0deg);
+      transform: translateY(-8px) scale(1.06) rotate(0deg);
+      box-shadow:
+        0 10px 18px rgba(0,0,0,0.18),
+        0 22px 36px rgba(0,0,0,0.20);
     }
 
     .postit.empty {
@@ -196,12 +253,19 @@
       transform: none;
     }
 
+    .postit.empty::before,
+    .postit.empty::after,
+    .postit.used::before,
+    .postit.used::after {
+      display: none;
+    }
+
     .postit.empty:hover {
       transform: none;
     }
 
     .postit.revealed {
-      outline: 4px solid rgba(145, 38, 66, 0.25);
+      outline: 4px solid rgba(96, 165, 250, 0.30);
     }
 
     .postit.peel {
@@ -273,7 +337,7 @@
     .modal-score {
       font-size: 34px;
       font-weight: 900;
-      color: #912642;
+      color: #60A5FA;
       margin-bottom: 22px;
     }
 
@@ -319,7 +383,7 @@
       color: white;
     }
 
-    button.secondary { background: #912642; }
+    button.secondary { background: #818CF8; }
     button.light { background: #eee; color: #222; }
 
     .team-scoreboard {
@@ -331,7 +395,7 @@
 
     .team-card {
       background: #fff;
-      border: 3px solid #e7e0d1;
+      border: 3px solid #E2E8F0;
       border-radius: 18px;
       padding: 18px;
       text-align: center;
@@ -348,7 +412,7 @@
     .team-score {
       font-size: 46px;
       font-weight: 900;
-      color: #912642;
+      color: #34D399;
     }
 
     .team-select {
@@ -356,8 +420,8 @@
       margin-top: 18px;
       padding: 18px;
       border-radius: 16px;
-      background: #fff7f9;
-      border: 2px dashed #d9a8b9;
+      background: #F8FAFC;
+      border: 2px dashed #BFDBFE;
     }
 
     .team-select.show {
@@ -368,7 +432,7 @@
       font-size: 20px;
       font-weight: 900;
       margin-bottom: 14px;
-      color: #912642;
+      color: #60A5FA;
     }
 
     .team-buttons {
