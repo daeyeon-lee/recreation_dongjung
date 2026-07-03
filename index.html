@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>하나바이블 중등부 1학기 정리 성경퀴즈대회</title>
+  <title>1학기 정리 퀴즈</title>
   <style>
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
@@ -16,12 +16,98 @@
       color: #222;
     }
 
-    .wrap {
+    .start-screen {
       min-height: 100vh;
       padding: 34px;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .start-card {
+      width: min(720px, 100%);
+      background: #fffdf7;
+      border: 14px solid #d8c7a3;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+      padding: 42px;
+      text-align: center;
+    }
+
+    .start-title {
+      font-size: 42px;
+      font-weight: 900;
+      margin: 0 0 12px;
+      color: #333;
+      word-break: keep-all;
+    }
+
+    .start-subtitle {
+      font-size: 20px;
+      font-weight: 700;
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .team-inputs {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .team-input-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .team-input-row label {
+      font-size: 20px;
+      font-weight: 900;
+      color: #912642;
+      text-align: left;
+    }
+
+    .team-input-row input {
+      width: 100%;
+      border: 3px solid #e7e0d1;
+      border-radius: 14px;
+      padding: 16px 18px;
+      font-family: inherit;
+      font-size: 20px;
+      font-weight: 800;
+      outline: none;
+      background: #fff;
+    }
+
+    .team-input-row input:focus {
+      border-color: #912642;
+    }
+
+    .start-button {
+      border: none;
+      border-radius: 999px;
+      padding: 16px 42px;
+      font-family: inherit;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+      background: #912642;
+      color: white;
+      box-shadow: 0 8px 18px rgba(145, 38, 66, 0.25);
+    }
+
+    .wrap {
+      min-height: 100vh;
+      padding: 34px;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wrap.active {
+      display: flex;
     }
 
     .board {
@@ -148,10 +234,11 @@
 
     .postit.used {
       background: #ddd;
-      color: #777;
+      color: #555;
       box-shadow: none;
-      text-decoration: line-through;
+      text-decoration: none;
       cursor: default;
+      font-weight: 900;
     }
 
     .modal {
@@ -235,6 +322,62 @@
     button.secondary { background: #912642; }
     button.light { background: #eee; color: #222; }
 
+    .team-scoreboard {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .team-card {
+      background: #fff;
+      border: 3px solid #e7e0d1;
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+
+    .team-name {
+      font-size: 22px;
+      font-weight: 900;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .team-score {
+      font-size: 46px;
+      font-weight: 900;
+      color: #912642;
+    }
+
+    .team-select {
+      display: none;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      background: #fff7f9;
+      border: 2px dashed #d9a8b9;
+    }
+
+    .team-select.show {
+      display: block;
+    }
+
+    .team-select-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      color: #912642;
+    }
+
+    .team-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     .note {
       position: absolute;
       right: 24px;
@@ -262,15 +405,81 @@
       }
       .question { font-size: 23px; }
       .answer { font-size: 24px; }
+      .team-scoreboard {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .team-card {
+        padding: 12px;
+      }
+      .team-name {
+        font-size: 15px;
+      }
+      .team-score {
+        font-size: 30px;
+      }
+      .start-card {
+        padding: 26px;
+      }
+      .start-title {
+        font-size: 28px;
+      }
+      .team-input-row {
+        grid-template-columns: 70px 1fr;
+      }
+      .team-input-row label,
+      .team-input-row input {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <section class="start-screen" id="startScreen">
+    <div class="start-card">
+      <h1 class="start-title">1학기 정리 퀴즈</h1>
+      <div class="start-subtitle">팀 이름을 정한 뒤 퀴즈를 시작하세요</div>
+
+      <div class="team-inputs">
+        <div class="team-input-row">
+          <label for="team1Input">팀 1</label>
+          <input id="team1Input" type="text" value="팀 1" />
+        </div>
+        <div class="team-input-row">
+          <label for="team2Input">팀 2</label>
+          <input id="team2Input" type="text" value="팀 2" />
+        </div>
+        <div class="team-input-row">
+          <label for="team3Input">팀 3</label>
+          <input id="team3Input" type="text" value="팀 3" />
+        </div>
+      </div>
+
+      <button class="start-button" onclick="startQuiz()">퀴즈 시작</button>
+    </div>
+  </section>
+
+  <div class="wrap" id="quizWrap">
     <main class="board">
-      <h1 class="title">하나바이블 중등부 1학기 정리 성경퀴즈대회</h1>
+      <h1 class="title">1학기 정리 퀴즈</h1>
       <section class="scoreboard" id="scoreboard"></section>
-      <div class="note">포스트잇을 클릭하면 문제가 열립니다</div>
+
+      <section class="team-scoreboard">
+        <div class="team-card">
+          <div class="team-name" id="team1Name">팀 1</div>
+          <div class="team-score" id="team1Score">0</div>
+        </div>
+        <div class="team-card">
+          <div class="team-name" id="team2Name">팀 2</div>
+          <div class="team-score" id="team2Score">0</div>
+        </div>
+        <div class="team-card">
+          <div class="team-name" id="team3Name">팀 3</div>
+          <div class="team-score" id="team3Score">0</div>
+        </div>
+      </section>
+
+      
     </main>
   </div>
 
@@ -283,8 +492,17 @@
 
       <div class="btns">
         <button class="action secondary" onclick="showAnswer()">정답 보기</button>
-        <button class="action light" onclick="markUsed()">사용 완료</button>
+        <button class="action light" onclick="showTeamSelect()">팀 선택</button>
         <button class="action" onclick="closeModal()">닫기</button>
+      </div>
+
+      <div class="team-select" id="teamSelect">
+        <div class="team-select-title">정답을 맞힌 팀을 선택하세요</div>
+        <div class="team-buttons">
+          <button class="action secondary" onclick="awardPoint(1)" id="team1Button">팀 1</button>
+          <button class="action secondary" onclick="awardPoint(2)" id="team2Button">팀 2</button>
+          <button class="action secondary" onclick="awardPoint(3)" id="team3Button">팀 3</button>
+        </div>
       </div>
     </div>
   </div>
@@ -504,7 +722,31 @@
     ];
 
     const scores = [10, 20, 30, 40, 50];
+    const teamScores = {
+      1: 0,
+      2: 0,
+      3: 0
+    };
+
     let currentButton = null;
+    let currentScore = 0;
+
+    function startQuiz() {
+      const team1 = document.getElementById("team1Input").value.trim() || "팀 1";
+      const team2 = document.getElementById("team2Input").value.trim() || "팀 2";
+      const team3 = document.getElementById("team3Input").value.trim() || "팀 3";
+
+      document.getElementById("team1Name").textContent = team1;
+      document.getElementById("team2Name").textContent = team2;
+      document.getElementById("team3Name").textContent = team3;
+
+      document.getElementById("team1Button").textContent = team1;
+      document.getElementById("team2Button").textContent = team2;
+      document.getElementById("team3Button").textContent = team3;
+
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("quizWrap").classList.add("active");
+    }
 
     function renderBoard() {
       const board = document.getElementById("scoreboard");
@@ -560,12 +802,14 @@
 
     function openModal(category, item, button) {
       currentButton = button;
+      currentScore = item.score;
 
       document.getElementById("modalCategory").textContent = category;
       document.getElementById("modalScore").textContent = item.score + "점";
       document.getElementById("modalQuestion").textContent = item.question;
       document.getElementById("modalAnswer").textContent = "정답: " + item.answer;
       document.getElementById("modalAnswer").classList.remove("show");
+      document.getElementById("teamSelect").classList.remove("show");
       document.getElementById("modal").classList.add("active");
     }
 
@@ -573,13 +817,32 @@
       document.getElementById("modalAnswer").classList.add("show");
     }
 
-    function markUsed() {
-      if (currentButton) currentButton.classList.add("used");
+    function showTeamSelect() {
+      document.getElementById("teamSelect").classList.add("show");
+    }
+
+    function awardPoint(teamNumber) {
+      if (!currentButton || currentButton.classList.contains("used")) return;
+
+      teamScores[teamNumber] += currentScore;
+      updateTeamScores();
+
+      const winnerName = document.getElementById("team" + teamNumber + "Name").textContent;
+      currentButton.textContent = winnerName;
+      currentButton.classList.add("used");
+
       closeModal();
+    }
+
+    function updateTeamScores() {
+      document.getElementById("team1Score").textContent = teamScores[1];
+      document.getElementById("team2Score").textContent = teamScores[2];
+      document.getElementById("team3Score").textContent = teamScores[3];
     }
 
     function closeModal() {
       document.getElementById("modal").classList.remove("active");
+      document.getElementById("teamSelect").classList.remove("show");
     }
 
     document.addEventListener("keydown", (event) => {
